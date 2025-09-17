@@ -59,5 +59,3 @@ export async function getPIBPerCapitaInDollars(): Promise<Map<number, number> | 
     return null;
   }
 }
-
-console.log(await getPIBInDollars())
