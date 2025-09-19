@@ -8,10 +8,10 @@ function App() {
               <h1>PIB Data</h1>
               <ul>
                 <li>
-                  <NavLink to="/chart" className={({ isActive }) => isActive ? "active" : ""}>Chart</NavLink>
+                  <NavLink to="/chart" className={({ isActive }) => isActive ? "active" : ""}>CHART</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/table" className={({ isActive }) => isActive ? "active" : ""}>Table</NavLink>
+                  <NavLink to="/table" className={({ isActive }) => isActive ? "active" : ""}>TABLE</NavLink>
                 </li>
               </ul>
             </nav>
