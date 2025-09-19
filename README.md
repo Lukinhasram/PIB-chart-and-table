@@ -1,6 +1,6 @@
-# Aplicação React + TypeScript + Vite
+# Aplicação que consome API do IBGE e exibe gráficos e tabelas
 
-Projeto front-end criado com Vite, React e TypeScript. Inclui roteamento, gráficos com Chart.js e configuração pronta para desenvolvimento local ou via Docker.
+Projeto front-end criado com Vite, React e TypeScript. Inclui roteamento, gráficos com Chart.js e configuração para desenvolvimento local ou via Docker.
 
 ## Requisitos
 
@@ -57,20 +57,28 @@ Notas:
 - O Vite está configurado para expor em 0.0.0.0:3000 e usar polling para hot reload em contêiner.
 - O volume `.:/app` permite hot reload a partir do host.
 
-## Tecnologias e decisões de design
+## Decisões de design
 
-- Vite 7: bundler e dev server rápidos, com Hot Module Replacement (HMR).
-- React 19 + TypeScript: tipagem estrita (tsconfig com `strict: true`) e JSX moderno.
-- React Router (react-router-dom v7): navegação SPA (ver `src/router.tsx`).
-- Chart.js 4 + react-chartjs-2 5: componentes de gráfico reativos (ver `src/components/chart.tsx`).
-- ESLint (configuração flat) com `typescript-eslint`, `react-hooks` e `react-refresh`: padronização e qualidade de código.
-- Docker (Node 20-alpine) + docker-compose: ambiente reprodutível de desenvolvimento, porta 3000 exposta, HMR funcionando dentro do contêiner.
+- Camada de serviços separada
+  - `src/services/api.ts`: faz o fetch dos dados brutos (IBGE e IPEA). Tratamento simples de erro (`response.ok`) e tipagem básica dos formatos retornados.
+  - `src/services/pibServices.ts`: “serviço de domínio” que combina e transforma os dados. Usa `Promise.all` para buscar em paralelo, `Map<number, number>` para taxas de câmbio e ordena os resultados. Inclui funções puras (ex.: `convertToDollars`) para facilitar testes.
 
-## Estrutura do projeto (resumo)
+- Visualização e tabela
+  - `src/components/chart.tsx`: Dois datasets e dois eixos Y (PIB e PIB per capita, ambos em USD), opções responsivas e interação por índice. `useEffect` com flag de cancelamento para evitar setState após unmount.
+  - `src/components/table.tsx`: tabela com `Intl.NumberFormat` memoizado para moeda (USD), loading state e chaves estáveis por ano.
+
+- Qualidade
+  - ESLint (flat) com `typescript-eslint`, `react-hooks` e `react-refresh` para padronização e feedback rápido.
+  - Vitest: testes unitários focados na camada de serviços (`pibServices.test.ts`), com mocks de `api.ts` para isolar lógica de conversão/combinação.
+
+- Build e execução
+  - Vite 7 com HMR. Configuração para Docker (host `0.0.0.0`, porta `3000` e `watch.usePolling` para hot reload confiável em contêiner).
+
+## Estrutura do projeto
 
 - `src/` código-fonte React/TS
-  - `components/` componentes como `chart.tsx` e `table.tsx`
-  - `services/` chamadas a API e testes (`pibServices.ts`, `pibServices.test.ts`)
+  - `components/` componentes `chart.tsx` e `table.tsx`
+  - `services/` chamadas a API, manuseio dos dados e testes (`pibServices.ts`, `pibServices.test.ts`)
   - `main.tsx`, `App.tsx`, `router.tsx`
 - `vite.config.ts` configuração do Vite (host, porta, polling, plugin React)
 - `Dockerfile` e `docker-compose.yml` configuração de contêiner
@@ -89,11 +97,6 @@ cp .env.example .env
 
 - `VITE_IBGE_API_URL`: endpoint da API do IBGE para PIB/PIB per capita.
 - `VITE_IPEADATA_API_URL`: endpoint da API do IPEA para taxa de câmbio BRL/USD.
-
-Observações:
-- Em Vite, apenas variáveis prefixadas com `VITE_` ficam acessíveis no front-end (via `import.meta.env`).
-- Em desenvolvimento com Docker, `.env` é montado via volume e ficará visível no contêiner.
-- Para builds de produção de imagem, evite copiar `.env`; injete variáveis em tempo de execução ou via orquestrador.
 
 ## Solução de problemas
 
