@@ -9,9 +9,11 @@ interface ExchangeRateData {
   VALVALOR: number; // taxa BRL por 1 USD
 }
 
-export async function getPIB(perCapta: Boolean): Promise<PIBData | null> {
+export async function getPIB(perCapta: boolean): Promise<PIBData | null> {
   // endpoint IBGE: PIB e PIB per capita por ano
-  const api_url = "https://servicodados.ibge.gov.br/api/v3/agregados/6784/periodos/1996|1997|1998|1999|2000|2001|2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|2012|2013|2014|2015|2016|2017|2018|2019|2020|2021|2022/variaveis/9808|9812?localidades=N1[all]";
+  const api_url =
+    import.meta.env.VITE_IBGE_API_URL ??
+    "https://servicodados.ibge.gov.br/api/v3/agregados/6784/periodos/1996|1997|1998|1999|2000|2001|2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|2012|2013|2014|2015|2016|2017|2018|2019|2020|2021|2022/variaveis/9808|9812?localidades=N1[all]";
   
   try {    
     const response = await fetch(api_url);
@@ -37,7 +39,9 @@ export async function getPIB(perCapta: Boolean): Promise<PIBData | null> {
 
 export async function getExchangeRates(): Promise<Map<number, number> | null> {
   // endpoint IPEA: BM_ERV (taxa de cambio BRL/USD)
-  const api_url = "http://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='BM_ERV')";
+  const api_url =
+    import.meta.env.VITE_IPEADATA_API_URL ??
+    "http://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='BM_ERV')";
 
   try {
     const response = await fetch(api_url);
