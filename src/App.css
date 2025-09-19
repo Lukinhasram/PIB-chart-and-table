@@ -1,6 +1,82 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+:root {
+  --color-accent: #f58561;
+  --color-accent-surface: #feebdd;
+  --color-primary: #1bb17a;
+  --color-white: #ffffff;
+
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  --radius-2: 10px;
+  --border-strong: 3px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  min-height: 100vh;
+  padding: var(--space-8);
+}
+
+nav {
+  width: 100%;
+  margin-bottom: var(--space-8);
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+nav a {
+  display: inline-block;
+  padding: 0.6em 1.5em;
+  color: var(--color-accent);
+  border-radius: 50px;
+  text-decoration: none;
+  border: var(--border-strong) solid var(--color-accent);
+}
+
+nav a:is(:hover, .active) {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+nav a:focus-visible {
+  outline: 2px dashed var(--color-accent);
+  outline-offset: 2px;
+}
+
+h1 {
+  font-size: 2em;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-6);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius-2);
+  overflow: hidden;
+}
+
+th {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  padding: .8em 2em;
+}
+
+td {
+  padding: .6em 2em;
+}
+
+tr:nth-child(even) {
+  background-color: var(--color-accent-surface);
 }
