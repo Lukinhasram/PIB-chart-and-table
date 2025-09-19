@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { getPIBInDollars, getPIBPerCapitaInDollars } from '../services/pibCalculations.js';
+import { fetchPIBData, type PIBData } from '../services/pibServices.js';
 
 ChartJS.register(
   CategoryScale,
@@ -22,50 +22,23 @@ ChartJS.register(
   Legend
 );
 
-interface PIBData {
-  year: number;
-  pib: number;
-  pibPerCapita: number;
-}
-
-async function fetchPIBData(): Promise<PIBData[]> {
-  const [pibData, pibPerCapitaData] = await Promise.all([
-    getPIBInDollars(),
-    getPIBPerCapitaInDollars()
-  ]);
-
-  if (!pibData || !pibPerCapitaData) {
-    return [];
-  }
-
-  const combined: PIBData[] = [];
-  pibData.forEach((pib, year) => {
-    const pibPerCapita = pibPerCapitaData.get(year);
-    if (pibPerCapita) {
-      combined.push({ year, pib: pib / 1000000000, pibPerCapita });
-    }
-  });
-
-  return combined.sort((a, b) => a.year - b.year);
-}
-
 function PIBChart() {
   const [data, setData] = useState<PIBData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadData = async () => {
+    let cancelled = false;
+    (async () => {
       try {
         const pibData = await fetchPIBData();
-        setData(pibData);
+        if (!cancelled) setData(pibData);
       } catch (error) {
-        console.error('Error loading PIB data:', error);
+        if (!cancelled) console.error("Error loading PIB data:", error);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    };
-
-    loadData();
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   if (loading) return <div>Loading chart...</div>;
@@ -74,17 +47,17 @@ function PIBChart() {
     labels: data.map(item => item.year.toString()),
     datasets: [
       {
-        label: 'PIB (Billions USD)',
+        label: 'PIB (USD)',
         data: data.map(item => item.pib),
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: '#1bb17a',
+        backgroundColor: '#1bb17a3a',
         yAxisID: 'y',
       },
       {
         label: 'PIB Per Capita (USD)',
         data: data.map(item => item.pibPerCapita),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: '#f58561',
+        backgroundColor: '#f5866148',
         yAxisID: 'y1',
       },
     ],
@@ -111,7 +84,7 @@ function PIBChart() {
         position: 'left' as const,
         title: {
           display: true,
-          text: 'PIB (Billions USD)'
+          text: 'PIB (USD)'
         }
       },
       y1: {
@@ -133,13 +106,13 @@ function PIBChart() {
       },
       title: {
         display: true,
-        text: 'Brazilian PIB Evolution',
+        text: 'Brazilian PIB/PIB Per Capita Evolution',
       },
     },
   };
 
   return (
-    <div style={{height: "90vh", width: "90vw"}}>
+    <div style={{height: "50vh", width: "90vw", minWidth: "500px"}}>
       <Line data={chartData} options={options} />
     </div>
   );
