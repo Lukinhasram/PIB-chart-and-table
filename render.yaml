@@ -1,0 +1,15 @@
+services:
+  - type: static
+    name: pib-chart-and-table
+    buildCommand: npm ci && npm run build
+    publishDir: dist
+    env:
+      - key: NODE_VERSION
+        value: 20
+    staticPublishPath: dist
+    redirects:
+      - source: 
+          path: "/*"
+        destination: 
+          path: "/index.html"
+        status: 200
