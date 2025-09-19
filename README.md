@@ -1,4 +1,4 @@
-# Aplicação que consome API do IBGE e exibe gráficos e tabelas
+# Aplicação que consome API do IBGE e exibe gráfico e tabela
 
 Projeto front-end criado com Vite, React e TypeScript. Inclui roteamento, gráficos com Chart.js e configuração para desenvolvimento local ou via Docker.
 
@@ -61,15 +61,15 @@ Notas:
 
 - Camada de serviços separada
   - `src/services/api.ts`: faz o fetch dos dados brutos (IBGE e IPEA). Tratamento simples de erro (`response.ok`) e tipagem básica dos formatos retornados.
-  - `src/services/pibServices.ts`: “serviço de domínio” que combina e transforma os dados. Usa `Promise.all` para buscar em paralelo, `Map<number, number>` para taxas de câmbio e ordena os resultados. Inclui funções puras (ex.: `convertToDollars`) para facilitar testes.
+  - `src/services/pibServices.ts`: “serviço de domínio” que combina e transforma os dados. Usa `Promise.all` para buscar em paralelo, `Map<number, number>` para taxas de câmbio e ordena os resultados.
 
 - Visualização e tabela
-  - `src/components/chart.tsx`: Dois datasets e dois eixos Y (PIB e PIB per capita, ambos em USD), opções responsivas e interação por índice. `useEffect` com flag de cancelamento para evitar setState após unmount.
+  - `src/components/chart.tsx`: Dois datasets e dois eixos Y (PIB e PIB per capita, ambos em USD). `useEffect` com flag de cancelamento para evitar setState após unmount.
   - `src/components/table.tsx`: tabela com `Intl.NumberFormat` memoizado para moeda (USD), loading state e chaves estáveis por ano.
 
 - Qualidade
-  - ESLint (flat) com `typescript-eslint`, `react-hooks` e `react-refresh` para padronização e feedback rápido.
   - Vitest: testes unitários focados na camada de serviços (`pibServices.test.ts`), com mocks de `api.ts` para isolar lógica de conversão/combinação.
+  - ESLint (flat) com `typescript-eslint`, `react-hooks` e `react-refresh` para padronização e feedback rápido.
 
 - Build e execução
   - Vite 7 com HMR. Configuração para Docker (host `0.0.0.0`, porta `3000` e `watch.usePolling` para hot reload confiável em contêiner).
