@@ -101,8 +101,4 @@ tr:nth-child(even) {
     padding: .2em .4em;
 
   }
-
-  nav ul {
-    flex-direction: column;
-  }
 }
