@@ -104,6 +104,7 @@ function PIBChart() {
           text: 'PIB (USD)'
         },
         ticks: {
+          // mostrar número abreviado em tela pequena
           callback: function(value: string | number) {
             if (isMobile) {
               return formatNumber(typeof value === 'string' ? parseFloat(value) : value);
@@ -124,6 +125,7 @@ function PIBChart() {
           drawOnChartArea: false,
         },
         ticks: {
+          // mostrar número abreviado em tela pequena
           callback: function(value: string | number) {
             if (isMobile) {
               return formatNumber(typeof value === 'string' ? parseFloat(value) : value);
