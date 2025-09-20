@@ -7,7 +7,7 @@ Projeto front-end criado com Vite, React e TypeScript. Inclui roteamento, gráfi
 ## Requisitos
 
 - Node.js 20+ e npm (para execução local)
-- Docker e Docker Compose (opcional, para executar em container)
+- Docker e Docker Compose (para executar em container)
 
 ## Como instalar e executar
 
