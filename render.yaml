@@ -1,14 +1,14 @@
 services:
-  - type: static
+  - type: web
     name: pib-chart-and-table
-    buildCommand: rm -rf node_modules package-lock.json && npm install && npm rebuild @rollup/rollup-linux-x64-gnu || true && npm run build
+    env: node
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm run preview"
     staticPublishPath: dist
     envVars:
       - key: NODE_VERSION
         value: 20
-      - key: npm_config_optional
-        value: "true"
     routes:
       - type: rewrite
-        source: /*
-        destination: /index.html
+        source: "/*"
+        destination: "/index.html"
