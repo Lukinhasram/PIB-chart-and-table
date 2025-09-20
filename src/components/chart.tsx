@@ -53,10 +53,10 @@ function PIBChart() {
   if (loading) return <div>Loading chart...</div>;
 
   const formatNumber = (value: number) => {
-    if (value >= 1 * 10**12) return `${(value/1 * 10**12).toFixed(1)}T`;
-    if (value >= 1 * 10**9) return `${(value / 1 * 10**9).toFixed(1)}B`;
-    if (value >= 1 * 10**6) return `${(value / 1 * 10**6).toFixed(1)}M`;
-    if (value >= 1 * 10**3) return `${(value / 1 * 10**3).toFixed(1)}K`;
+    if (value >= 10**12) return `${(value / 10**12).toFixed(1)}T`;
+    if (value >= 10**9) return `${(value / 10**9).toFixed(1)}B`;
+    if (value >= 10**6) return `${(value / 10**6).toFixed(1)}M`;
+    if (value >= 10**3) return `${(value / 10**3).toFixed(1)}K`;
     return value.toString();
   };
 
