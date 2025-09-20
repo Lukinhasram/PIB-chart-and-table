@@ -5,7 +5,7 @@ function App() {
     return(
         <div className="app-container">
             <nav>
-              <h1>PIB Data</h1>
+              <h1>PIB Conéctar</h1>
               <ul>
                 <li>
                   <NavLink to="/chart" className={({ isActive }) => isActive ? "active" : ""}>CHART</NavLink>

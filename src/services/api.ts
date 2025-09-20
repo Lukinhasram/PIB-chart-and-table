@@ -41,7 +41,7 @@ export async function getExchangeRates(): Promise<Map<number, number> | null> {
   // endpoint IPEA: BM_ERV (taxa de cambio BRL/USD)
   const api_url =
     import.meta.env.VITE_IPEADATA_API_URL ??
-    "http://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='BM_ERV')";
+  "https://www.ipeadata.gov.br/api/odata4/ValoresSerie(SERCODIGO='BM_ERV')";
 
   try {
     const response = await fetch(api_url);
