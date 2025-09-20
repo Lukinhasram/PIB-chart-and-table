@@ -97,6 +97,10 @@ tr:nth-child(even) {
     width: 95vw;
   }
 
+  .table-container {
+    width: 80vw;
+  }
+
   nav ul {
     flex-direction: column;
   }
