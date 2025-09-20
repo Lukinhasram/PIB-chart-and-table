@@ -97,8 +97,9 @@ tr:nth-child(even) {
     width: 95vw;
   }
 
-  .table-container {
-    width: 80vw;
+  td, th {
+    padding: .2em .4em;
+
   }
 
   nav ul {
