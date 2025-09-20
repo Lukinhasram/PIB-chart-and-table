@@ -1,5 +1,7 @@
 # Aplicação que consome API do IBGE e exibe gráfico e tabela
 
+**Link da aplicação:** [https://pib-chart.onrender.com/chart](https://pib-chart.onrender.com/chart)
+
 Projeto front-end criado com Vite, React e TypeScript. Inclui roteamento, gráficos com Chart.js e configuração para desenvolvimento local ou via Docker.
 
 ## Requisitos
