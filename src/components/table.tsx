@@ -32,7 +32,7 @@ function PIBTable() {
   if (loading) return <div>Loading table...</div>;
 
   return (
-    <div>
+    <div className="table-container">
       <table>
         <thead>
           <tr>

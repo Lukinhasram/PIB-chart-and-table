@@ -79,3 +79,25 @@ td {
 tr:nth-child(even) {
   background-color: var(--color-accent-surface);
 }
+
+.chart-container {
+  position: relative;
+  height: 50vh;
+  width: 90vw;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 60vh;
+    width: 95vw;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+}

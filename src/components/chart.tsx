@@ -112,7 +112,7 @@ function PIBChart() {
   };
 
   return (
-    <div style={{height: "50vh", width: "90vw", minWidth: "500px"}}>
+    <div className="chart-container">
       <Line data={chartData} options={options} />
     </div>
   );
