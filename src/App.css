@@ -57,7 +57,6 @@ nav a:focus-visible {
 h1 {
   font-size: 2em;
   color: var(--color-primary);
-  margin: 0 0 var(--space-6);
 }
 
 table {
